@@ -1,0 +1,87 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop_Version"
+        xmlns:Models="clr-namespace:Desktop_Version.Models" x:Class="Desktop_Version.MainWindow"
+        mc:Ignorable="d"
+        Title="Starwin Data Converter" Height="350" Width="525"
+        Loaded="MainWindow_OnLoaded"
+    Closing="MainWindow_OnClosing"
+    >
+    <Window.DataContext>
+        <Models:LocalSettings/>
+    </Window.DataContext>
+    <Grid>
+        <TabControl>
+            <TabItem Header="File">
+                <StackPanel>
+                    <Expander Header="New Sector">
+                        <StackPanel>
+                            <Label Content="Sector Name:"/>
+                            <TextBox x:Name="SectorName" />
+                            <Button x:Name="Save" Click="Save_OnClick" Content="Save" />
+                        </StackPanel>
+                    </Expander>
+                    <Expander x:Name="LoadExpander" Expanded="LoadExpander_OnExpanded" Header="Load Sector">
+                        <StackPanel>
+                            <ScrollViewer>
+                                <ListBox x:Name="Sectors"/>
+                            </ScrollViewer>
+                            <Button x:Name="Load" Click="Load_OnClick" Content="Load" />
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="SectorTab" Header="Sector" />
+            <TabItem Header="Settings">
+                <Grid>
+                    <GroupBox Header="Save Options">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="AutoSave" Content="Auto Save" IsChecked="{Binding Path=LocalSettings.IsAutoSaveOn }" />
+                            <CheckBox Grid.Column="1" x:Name="AutoLoad" Content="Auto Load Last Sector" IsChecked="True" />
+                            <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Mode">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <RadioButton x:Name="UseLocal" GroupName="UseLocal" Content="Use Local"
+                                                 IsChecked="True" />
+                                    <RadioButton GroupName="UseLocal" Content="Use Server" Grid.Row="0" Grid.Column="1"
+                                                 IsEnabled="False" />
+                                    <Label Grid.Row="1" Grid.Column="0" Content="Server Address:"/>
+                                    <TextBox x:Name="ServerAddress" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                                             IsEnabled="False" Text="http://[future URL here]"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Content="Local Save Directory:"/>
+                                    <TextBox x:Name="LocalSaveDir" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0"
+                                             IsEnabled="False" Text="SectorTabs\"/>
+                                </Grid>
+
+                            </GroupBox>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="About">
+                <TextBlock TextWrapping="Wrap"><Run Text="This application is designed to be used in conjunction with starwin. It will allow you to extract extra info from logs you export from Starwin."/></TextBlock>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
